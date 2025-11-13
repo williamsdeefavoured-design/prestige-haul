@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 *{
-    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 span{
-    color: #30ad30;
+    color: #0051ff;
 }
 .hero-container {
   position: relative;
@@ -29,5 +29,5 @@ span{
   position: relative;
   z-index: 1;
   height: 100%;
-  background: rgba(0, 0, 0, 0.158); /* dim overlay for readability */
+  background: rgba(0, 0, 0, 0.295); /* dim overlay for readability */
 }
