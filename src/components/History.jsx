@@ -32,28 +32,28 @@ function StatsSection() {
     <section className="stats-section bg-gray-50 py-16 px-6 md:px-20 flex flex-wrap justify-center items-center gap-10 text-center">
       <div className="stat w-40 sm:w-48 md:w-56" ref={ref1}>
         <h2 className="text-4xl sm:text-5xl font-extrabold text-blue-700">
-          {isVisible1 && <CountUp end={5000} duration={3} />}+
+          {isVisible1 && <CountUp end={1200} duration={3} />}+
         </h2>
         <p className="text-gray-600 mt-2 font-medium">Successful Deliveries</p>
       </div>
 
       <div className="stat w-40 sm:w-48 md:w-56" ref={ref2}>
         <h2 className="text-4xl sm:text-5xl font-extrabold text-blue-700">
-          {isVisible2 && <CountUp end={1200} duration={3} />}+
+          {isVisible2 && <CountUp end={500} duration={3} />}+
         </h2>
         <p className="text-gray-600 mt-2 font-medium">Satisfied Clients</p>
       </div>
 
       <div className="stat w-40 sm:w-48 md:w-56" ref={ref3}>
         <h2 className="text-4xl sm:text-5xl font-extrabold text-blue-700">
-          {isVisible3 && <CountUp end={15} duration={3} />}+
+          {isVisible3 && <CountUp end={3} duration={3} />}+
         </h2>
         <p className="text-gray-600 mt-2 font-medium">Years of Excellence</p>
       </div>
 
       <div className="stat w-40 sm:w-48 md:w-56" ref={ref4}>
         <h2 className="text-4xl sm:text-5xl font-extrabold text-blue-700">
-          {isVisible4 && <CountUp end={350} duration={3} />}+
+          {isVisible4 && <CountUp end={60} duration={3} />}+
         </h2>
         <p className="text-gray-600 mt-2 font-medium">Active Fleet</p>
       </div>

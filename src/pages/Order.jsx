@@ -1,8 +1,11 @@
 import React from 'react'
+import OrderForm from '../components/OrderForm'
 
 function Order() {
   return (
-    <div>Order</div>
+    <div className="order">
+      <OrderForm/>
+    </div>
   )
 }
 

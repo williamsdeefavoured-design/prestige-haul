@@ -3,6 +3,7 @@ import Hero from '../components/Hero'
 import Haulage from '../components/Haulage'
 import Convoy from '../components/Convoy'
 import StatsSection from '../components/History'
+import WhyUs from '../components/WhyUs'
 
 function Home() {
   return (
@@ -11,6 +12,7 @@ function Home() {
         <Haulage />
         <Convoy />
         <StatsSection />
+        <WhyUs />
     </div>
   )
 }

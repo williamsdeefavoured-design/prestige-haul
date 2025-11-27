@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaBell } from "react-icons/fa";
 import MainBtn from "./MainBtn";
 
 function Navbar() {
@@ -18,9 +18,15 @@ function Navbar() {
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-10">
-          <Link to="/rides" className="hover:text-blue-700">Our Rides</Link>
-          <Link to="/order" className="hover:text-blue-700">Book Us</Link>
-          <Link to="/about" className="hover:text-blue-700">About</Link>
+          <Link to="/rides" className="hover:text-blue-700">
+            Our Rides
+          </Link>
+          <Link to="/order" className="hover:text-blue-700">
+            Book Us
+          </Link>
+          <Link to="/about" className="hover:text-blue-700">
+            About
+          </Link>
 
           <div className="flex gap-5">
             <Link to="/signup">
@@ -29,7 +35,7 @@ function Navbar() {
               </button>
             </Link>
             <Link to="/signin">
-              <MainBtn text="Sign In"/>
+              <MainBtn text="Sign In" />
             </Link>
           </div>
         </div>
@@ -46,9 +52,27 @@ function Navbar() {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-white shadow-md px-6 py-4 space-y-3 text-center">
-          <Link to="/rides" className="block hover:text-blue-700" onClick={() => setMenuOpen(false)}>Our Rides</Link>
-          <Link to="/order" className="block hover:text-blue-700" onClick={() => setMenuOpen(false)}>Book Us</Link>
-          <Link to="/about" className="block hover:text-blue-700" onClick={() => setMenuOpen(false)}>About</Link>
+          <Link
+            to="/rides"
+            className="block hover:text-blue-700"
+            onClick={() => setMenuOpen(false)}
+          >
+            Our Rides
+          </Link>
+          <Link
+            to="/order"
+            className="block hover:text-blue-700"
+            onClick={() => setMenuOpen(false)}
+          >
+            Book Us
+          </Link>
+          <Link
+            to="/about"
+            className="block hover:text-blue-700"
+            onClick={() => setMenuOpen(false)}
+          >
+            About
+          </Link>
           <div className="flex flex-col gap-3 mt-3">
             <Link to="/signup" onClick={() => setMenuOpen(false)}>
               <button className="w-full hover:bg-blue-700 hover:text-white bg-gray-400 px-4 py-2 rounded-xl transition-all duration-300">
@@ -56,9 +80,14 @@ function Navbar() {
               </button>
             </Link>
             <Link to="/signin" onClick={() => setMenuOpen(false)}>
-              <MainBtn text="Sign In"/>
+              <MainBtn text="Sign In" />
             </Link>
+            
           </div>
+
+          <div className="notifi flex justify-center mt-2">
+              <FaBell className="text-black text-2xl" />
+            </div>
         </div>
       )}
     </nav>

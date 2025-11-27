@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 *{
     font-family: 'Poppins', sans-serif;
 }
@@ -31,3 +32,25 @@ span{
   height: 100%;
   background: rgba(0, 0, 0, 0.295); /* dim overlay for readability */
 }
+
+.fade {
+  opacity: 0;
+  animation: smoothFade 0.7s forwards;
+}
+
+@keyframes smoothFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+/* .ride-us{
+  background-image: url("./assets/cargo-truck-side.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+} */
