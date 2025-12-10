@@ -3,30 +3,28 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Input } from "@/components/ui/input";
-import { PaystackButton } from "react-paystack";
 import { useCart } from "../components/context/CartContext";
 import { FaTrash } from "react-icons/fa";
 
 export default function Cart() {
   const navigate = useNavigate();
-  const { cart, removeOrder } = useCart(); // <-- added removeOrder
+  const { cart, removeOrder } = useCart(); 
   const [tab, setTab] = useState("bank");
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
 
   const publicKey = "pk_test_7be01e1c18b184c0c7a4b5f5c34ec3e6aac049ff";
 
-  // Dynamic total price
-  const totalPrice = cart?.reduce((sum, order) => {
-    const base = 20000;
-    const multiplier = order.direction === "From Ekiti" ? 1 : 1.5;
-    return sum + base * multiplier;
-  }, 0) || 0;
+  const totalPrice =
+    cart?.reduce((sum, order) => {
+      const base = 20000;
+      const multiplier = order.direction === "From Ekiti" ? 1 : 1.5;
+      return sum + base * multiplier;
+    }, 0) || 0;
 
   useEffect(() => {
     if (cart && cart.length > 0) {
       const lastOrder = cart[cart.length - 1];
       setFormData({
-        ...formData,
         name: lastOrder.fullname || "",
         email: lastOrder.email || "",
         phone: lastOrder.phone || "",
@@ -48,14 +46,28 @@ export default function Cart() {
     toast.info("Payment closed without completing.", { autoClose: 2000 });
   };
 
-  const paystackProps = {
-    email: formData.email,
-    amount: totalPrice * 100,
-    publicKey,
-    text: "Pay Now",
-    onSuccess: handleSuccess,
-    onClose: handleClose,
-    metadata: { name: formData.name, phone: formData.phone },
+  // **** PAYSTACK INLINE MAGIC ****
+  const payWithPaystack = () => {
+    if (!formData.email || !formData.name || !formData.phone) {
+      toast.error("Please fill all payment fields");
+      return;
+    }
+
+    const handler = window.PaystackPop.setup({
+      key: publicKey,
+      email: formData.email,
+      amount: totalPrice * 100,
+      metadata: {
+        name: formData.name,
+        phone: formData.phone,
+      },
+      onClose: handleClose,
+      callback: function () {
+        handleSuccess();
+      },
+    });
+
+    handler.openIframe();
   };
 
   return (
@@ -71,9 +83,12 @@ export default function Cart() {
                   <p><span className="font-semibold">Name:</span> {order.fullname}</p>
                   <p><span className="font-semibold">Direction:</span> {order.direction}</p>
                   <p><span className="font-semibold">Destination:</span> {order.destination}</p>
-                  <p><span className="font-semibold">Fare:</span> ₦{order.direction === "From Ekiti" ? 20000 : 30000}</p>
+                  <p>
+                    <span className="font-semibold">Fare:</span> ₦
+                    {order.direction === "From Ekiti" ? 20000 : 30000}
+                  </p>
 
-                  {/* 🗑️ Delete Button */}
+                  {/* Delete Icon */}
                   <button
                     onClick={() => removeOrder(i)}
                     className="absolute top-2 right-2 text-red-600 hover:text-red-800"
@@ -89,7 +104,7 @@ export default function Cart() {
               Total Price: ₦{totalPrice.toLocaleString()}
             </p>
 
-            {/* 🔵 Tabs */}
+            {/* Tabs */}
             <div className="flex mb-6 border-b pb-2">
               <button
                 onClick={() => setTab("bank")}
@@ -109,13 +124,37 @@ export default function Cart() {
               </button>
             </div>
 
-            {/* 🔵 Payment Form */}
+            {/* Payment Form */}
             {tab === "bank" && (
               <div className="flex flex-col gap-4">
-                <Input label="Name" name="name" value={formData.name} onChange={handleChange} required />
-                <Input label="Email" type="email" name="email" value={formData.email} onChange={handleChange} required />
-                <Input label="Phone" type="tel" name="phone" value={formData.phone} onChange={handleChange} required />
-                <PaystackButton {...paystackProps} className="w-full mt-4 bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-xl" />
+                <Input
+                  label="Name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+                <Input
+                  label="Email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+                <Input
+                  label="Phone"
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                />
+
+                {/* Paystack Button */}
+                <button
+                  onClick={payWithPaystack}
+                  className="w-full mt-4 bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-xl"
+                >
+                  Pay Now
+                </button>
               </div>
             )}
 
