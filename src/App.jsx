@@ -11,10 +11,12 @@ import Footer from "./components/Footer";
 import NotFound from "./components/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Cart from "./pages/Cart";
+import Receipt from "./pages/Receipt";
 import { NotificationProvider } from "./components/context/NotificationContext";
 import { CartProvider } from "./components/context/CartContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ReceiptIcon } from "lucide-react";
 
 function App() {
   return (
@@ -39,6 +41,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/rides" element={<Rides />} />
+            <Route path="/receipt" element={<Receipt />} />
 
             <Route
               path="/order"
