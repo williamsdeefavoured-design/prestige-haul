@@ -10,7 +10,6 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  // ✅ Safe defaults
   const { notifications = [], markAllRead } = useNotification();
   const { user, logout } = useAuth();
 
@@ -30,6 +29,12 @@ function Navbar() {
           <Link to="/order" className="hover:text-blue-700">Book Us</Link>
           <Link to="/about" className="hover:text-blue-700">About</Link>
 
+          {user && (
+            <Link to="/history" className="hover:text-blue-700">
+              History
+            </Link>
+          )}
+
           {/* 🔔 Notification Bell */}
           <div className="relative">
             <FaBell
@@ -48,7 +53,7 @@ function Navbar() {
                   <h4 className="font-semibold">Notifications</h4>
                   <button
                     onClick={() => {
-                      markAllRead?.(); // safe call
+                      markAllRead?.();
                       setDropdownOpen(false);
                     }}
                     className="text-sm text-blue-600 hover:underline"
@@ -118,6 +123,10 @@ function Navbar() {
           <Link to="/rides" onClick={() => setMenuOpen(false)} className="block hover:text-blue-700">Our Rides</Link>
           <Link to="/order" onClick={() => setMenuOpen(false)} className="block hover:text-blue-700">Book Us</Link>
           <Link to="/about" onClick={() => setMenuOpen(false)} className="block hover:text-blue-700">About</Link>
+
+          {user && (
+            <Link to="/history" onClick={() => setMenuOpen(false)} className="block hover:text-blue-700">History</Link>
+          )}
 
           {user ? (
             <button

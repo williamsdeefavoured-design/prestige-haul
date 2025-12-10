@@ -11,7 +11,7 @@ import Footer from "./components/Footer";
 import NotFound from "./components/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Cart from "./pages/Cart";
-import Receipt from "./pages/Receipt";
+import History from "./pages/History";
 import { NotificationProvider } from "./components/context/NotificationContext";
 import { CartProvider } from "./components/context/CartContext";
 import { ToastContainer } from "react-toastify";
@@ -41,7 +41,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/rides" element={<Rides />} />
-            <Route path="/receipt" element={<Receipt />} />
+            <Route path="/history" element={<History />} />
 
             <Route
               path="/order"

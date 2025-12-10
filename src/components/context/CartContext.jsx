@@ -1,16 +1,33 @@
 import React, { createContext, useContext, useState } from "react";
+import { riders } from "../../data/rider";
+  // <-- new import
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
-  // Add order to cart (original)
-  const addToCart = (order) => {
-    setCart((prev) => [...prev, order]);
+  // pick random rider
+  const getRandomRider = () => {
+    const i = Math.floor(Math.random() * riders.length);
+    return riders[i];
   };
 
-  // Alias for OrderForm so it stops crying
+  const addToCart = (order) => {
+    const assignedRider = getRandomRider();
+
+    const finalOrder = {
+      ...order,
+      riderName: assignedRider.RiderName,
+      riderId: assignedRider.RiderId,
+      riderImg: assignedRider.RiderImg,
+      riderLocation: assignedRider.RiderLocation,
+      riderRating: assignedRider.rating,
+    };
+
+    setCart((prev) => [...prev, finalOrder]);
+  };
+
   const saveOrder = (order) => {
     addToCart(order);
   };

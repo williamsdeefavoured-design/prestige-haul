@@ -8,7 +8,7 @@ import { FaTrash } from "react-icons/fa";
 
 export default function Cart() {
   const navigate = useNavigate();
-  const { cart, removeOrder } = useCart(); 
+  const { cart, removeOrder } = useCart();
   const [tab, setTab] = useState("bank");
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
 
@@ -32,14 +32,37 @@ export default function Cart() {
     }
   }, [cart]);
 
+  const saveRideToHistory = (cart, formData, totalPrice) => {
+    const history = JSON.parse(localStorage.getItem("ridesHistory") || "[]");
+
+    const order = cart[0]; // first order only (you can change later)
+
+    const newEntry = {
+      riderName: order?.assignedRider?.RiderName,
+      riderId: order?.assignedRider?.RiderId,
+      riderImg: order?.assignedRider?.RiderImg,
+      vehicle: order?.vehicle,
+      location: order?.destination,
+      direction: order?.direction,
+      price: "₦" + totalPrice.toLocaleString(),
+      email: formData.email,
+      phone: formData.phone,
+      date: new Date().toLocaleString(),
+    };
+
+    history.push(newEntry);
+    localStorage.setItem("ridesHistory", JSON.stringify(history));
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSuccess = () => {
+    saveRideToHistory(cart, formData, totalPrice);
     toast.success("Payment successful!", { autoClose: 2000 });
-    navigate("/receipt");
+    navigate("/history");
   };
 
   const handleClose = () => {
@@ -80,9 +103,18 @@ export default function Cart() {
             <ul className="mb-4 space-y-3">
               {cart.map((order, i) => (
                 <li key={i} className="p-3 border rounded-lg relative">
-                  <p><span className="font-semibold">Name:</span> {order.fullname}</p>
-                  <p><span className="font-semibold">Direction:</span> {order.direction}</p>
-                  <p><span className="font-semibold">Destination:</span> {order.destination}</p>
+                  <p>
+                    <span className="font-semibold">Name:</span>{" "}
+                    {order.fullname}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Direction:</span>{" "}
+                    {order.direction}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Destination:</span>{" "}
+                    {order.destination}
+                  </p>
                   <p>
                     <span className="font-semibold">Fare:</span> ₦
                     {order.direction === "From Ekiti" ? 20000 : 30000}
@@ -109,7 +141,9 @@ export default function Cart() {
               <button
                 onClick={() => setTab("bank")}
                 className={`w-1/2 text-center py-2 font-semibold ${
-                  tab === "bank" ? "text-blue-700 border-b-2 border-blue-700" : "text-gray-500"
+                  tab === "bank"
+                    ? "text-blue-700 border-b-2 border-blue-700"
+                    : "text-gray-500"
                 }`}
               >
                 Bank / Card
@@ -117,7 +151,9 @@ export default function Cart() {
               <button
                 onClick={() => setTab("stellar")}
                 className={`w-1/2 text-center py-2 font-semibold ${
-                  tab === "stellar" ? "text-blue-700 border-b-2 border-blue-700" : "text-gray-500"
+                  tab === "stellar"
+                    ? "text-blue-700 border-b-2 border-blue-700"
+                    : "text-gray-500"
                 }`}
               >
                 Stellar
@@ -160,10 +196,16 @@ export default function Cart() {
 
             {tab === "stellar" && (
               <div className="p-4 bg-yellow-50 rounded-xl">
-                <p className="font-semibold text-yellow-700">Send Payment Using Stellar</p>
+                <p className="font-semibold text-yellow-700">
+                  Send Payment Using Stellar
+                </p>
                 <p>Asset: USDC (Stellar)</p>
                 <p>Network: Stellar Mainnet</p>
-                <Input readOnly label="Wallet" value="GA3D...YOUR_WALLET...XYZ" />
+                <Input
+                  readOnly
+                  label="Wallet"
+                  value="GA3D...YOUR_WALLET...XYZ"
+                />
                 <Input readOnly label="Memo" value="AUTO-GENERATED-MEMO" />
               </div>
             )}

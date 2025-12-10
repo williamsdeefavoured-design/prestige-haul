@@ -4,6 +4,7 @@ import Input from "./Input";
 import { useNotification } from "./context/NotificationContext";
 import { useCart } from "./context/CartContext";
 import { useNavigate } from "react-router-dom";
+import { riders } from "../data/rider";
 
 function OrderForm() {
   const directionOptions = ["From Ekiti", "To Ekiti"];
@@ -14,16 +15,36 @@ function OrderForm() {
   const [travelDirection, setTravelDirection] = useState("From Ekiti");
 
   const fromEkitiLocations = [
-    "Lagos","Ibadan","Oyo","Ogun","Osun","Ondo","Rivers","Akwa Ibom","Imo","Delta","Kaduna"
+    "Lagos",
+    "Ibadan",
+    "Oyo",
+    "Ogun",
+    "Osun",
+    "Ondo",
+    "Rivers",
+    "Akwa Ibom",
+    "Imo",
+    "Delta",
+    "Kaduna",
   ];
   const toEkitiLocations = [
-    "Lagos","Rivers","Akwa Ibom","Imo","Delta","Oyo","Ogun","Kaduna"
+    "Lagos",
+    "Rivers",
+    "Akwa Ibom",
+    "Imo",
+    "Delta",
+    "Oyo",
+    "Ogun",
+    "Kaduna",
   ];
 
-  const locationOptions = travelDirection === "From Ekiti" ? fromEkitiLocations : toEkitiLocations;
+  const locationOptions =
+    travelDirection === "From Ekiti" ? fromEkitiLocations : toEkitiLocations;
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const randomRider = riders[Math.floor(Math.random() * riders.length)];
+
     const formData = {
       fullname: e.target.fullname.value,
       email: e.target.email.value,
@@ -32,6 +53,7 @@ function OrderForm() {
       direction: travelDirection,
       destination: e.target.destination.value,
       instructions: e.target.instructions.value,
+      assignedRider: randomRider,
     };
 
     saveOrder(formData);
@@ -69,10 +91,26 @@ function OrderForm() {
         </p>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-          <Input inputName="fullname" inputPlaceholder="Your Full Name" inputType="text" />
-          <Input inputName="email" inputPlaceholder="Your Email" inputType="email" />
-          <Input inputName="phone" inputPlaceholder="Phone Number" inputType="number" />
-          <Input inputName="location" inputPlaceholder="Your Address" inputType="text" />
+          <Input
+            inputName="fullname"
+            inputPlaceholder="Your Full Name"
+            inputType="text"
+          />
+          <Input
+            inputName="email"
+            inputPlaceholder="Your Email"
+            inputType="email"
+          />
+          <Input
+            inputName="phone"
+            inputPlaceholder="Phone Number"
+            inputType="number"
+          />
+          <Input
+            inputName="location"
+            inputPlaceholder="Your Address"
+            inputType="text"
+          />
 
           <select
             className="border p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-600"
@@ -80,7 +118,9 @@ function OrderForm() {
             onChange={(e) => setTravelDirection(e.target.value)}
           >
             {directionOptions.map((dir, i) => (
-              <option key={i} value={dir}>{dir}</option>
+              <option key={i} value={dir}>
+                {dir}
+              </option>
             ))}
           </select>
 
@@ -91,8 +131,16 @@ function OrderForm() {
             options={locationOptions}
           />
 
-          <Input inputType="textarea" inputName="instructions" inputPlaceholder="Tell us more…" />
-          <Input inputType="radio" inputName="serviceType" options={["Convoy", "Haulage"]} />
+          <Input
+            inputType="textarea"
+            inputName="instructions"
+            inputPlaceholder="Tell us more…"
+          />
+          <Input
+            inputType="radio"
+            inputName="serviceType"
+            options={["Convoy", "Haulage"]}
+          />
 
           <button
             type="submit"
