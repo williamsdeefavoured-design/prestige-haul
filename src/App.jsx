@@ -9,22 +9,53 @@ import Signin from "./pages/Signin";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import NotFound from "./components/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Cart from "./pages/Cart";
+import { NotificationProvider } from "./components/context/NotificationContext";
+import { CartProvider } from "./components/context/CartContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/rides" element={<Rides />} />
-        <Route path="/order" element={<Order />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/signin" element={<Signin />} />
+      <NotificationProvider>
+        <Navbar />
 
-        {/* 🔥 Catch All Route */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+        {/* ToastContainer should be OUTSIDE Routes */}
+        <ToastContainer
+          position="top-right"
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
+        <CartProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/rides" element={<Rides />} />
+
+            <Route
+              path="/order"
+              element={
+                <ProtectedRoute>
+                  <Order />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </CartProvider>
+      </NotificationProvider>
       <Footer />
     </>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import cargoImg from "../assets/cargo-truck.png"
+import cargoImg from "../assets/cargo-truck.png";
 import MainBtn from "./MainBtn";
 import { Link } from "react-router-dom";
 
@@ -17,7 +17,9 @@ function Cargo() {
         </h1>
 
         <p className="sub-text font-medium mt-4 text-gray-600 text-sm sm:text-base">
-          Get your loads moved from anywhere you are, into Ekiti state at an affordable price beffiting for you. No matter what it is, be it Goods, House items... we got you covered at <span>PrestigeHaul </span>
+          Get your loads moved from anywhere you are, into Ekiti state at an
+          affordable price beffiting for you. No matter what it is, be it Goods,
+          House items... we got you covered at <span>PrestigeHaul </span>
         </p>
 
         {/* FEATURE LIST */}
@@ -44,17 +46,18 @@ function Cargo() {
           <Link to="/signup">
             <MainBtn text="Get a truck your size" />
           </Link>
-
         </div>
       </div>
 
       {/* RIGHT SIDE (IMAGE) */}
       <div className="right md:w-1/2 flex justify-center">
-        <img
-          src={cargoImg}
-          alt="Haulage Map"
-          className="w-full max-w-sm sm:max-w-md lg:max-w-lg object-contain"
-        />
+        <Link to='/rides'>
+          <img
+            src={cargoImg}
+            alt="Haulage Map"
+            className="w-full max-w-sm sm:max-w-md lg:max-w-lg object-contain"
+          />
+        </Link>
       </div>
     </div>
   );

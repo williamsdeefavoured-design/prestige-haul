@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Input({
   inputType,
@@ -9,6 +10,10 @@ function Input({
   options,
   onChange,
 }) {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePassword = () => setShowPassword(!showPassword);
+
   // TEXTAREA
   if (inputType === "textarea") {
     return (
@@ -58,6 +63,30 @@ function Input({
             {opt}
           </label>
         ))}
+      </div>
+    );
+  }
+
+  // PASSWORD INPUT WITH TOGGLE 👁️
+  if (inputType === "password") {
+    return (
+      <div className="relative w-full">
+        <input
+          type={showPassword ? "text" : "password"}
+          name={inputName}
+          id={inputId}
+          placeholder={inputPlaceholder}
+          value={inputValue}
+          onChange={onChange}
+          className="border p-3 rounded-md w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+
+        <span
+          onClick={togglePassword}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 cursor-pointer text-xl"
+        >
+          {showPassword ? <FaEyeSlash /> : <FaEye />}
+        </span>
       </div>
     );
   }

@@ -8,11 +8,13 @@ function Convoy() {
     <div className="convoy flex flex-col-reverse md:flex-row items-center justify-between gap-10 md:gap-16 lg:gap-24 px-6 md:px-12 lg:px-24 py-16 md:py-24">
       {/* LEFT SIDE (IMAGE) */}
       <div className="left md:w-1/2 flex justify-center">
-        <img
-          src={ConvoyImg}
-          alt="Haulage Map"
-          className="w-full max-w-sm sm:max-w-md lg:max-w-lg object-contain"
-        />
+        <Link to='/rides'>
+          <img
+            src={ConvoyImg}
+            alt="Haulage Map"
+            className="w-full max-w-sm sm:max-w-md lg:max-w-lg object-contain"
+          />
+        </Link>
       </div>
 
       {/* RIGHT SIDE */}

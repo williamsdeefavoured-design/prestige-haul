@@ -3,14 +3,16 @@ import whyusImg from "../assets/whyus.png";
 
 function WhyUs() {
   return (
-    <div className="
+    <div
+      className="
       why-section 
       flex flex-col-reverse md:flex-row 
       items-center 
       gap-12 md:gap-20 
       my-16 md:my-24 
       px-6 md:px-12 lg:px-24
-    ">
+    "
+    >
       {/* TEXT SIDE */}
       <div className="text-content w-full md:w-1/2 text-center md:text-left">
         <p className="lead-text text-gray-500 text-sm md:text-base tracking-wide">
@@ -23,15 +25,15 @@ function WhyUs() {
         </h1>
 
         <p className="about-txt text-gray-600 text-sm sm:text-base leading-relaxed">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. In ducimus
-          harum ratione. Deserunt eum expedita ducimus ut architecto provident
-          atque laudantium eveniet, eos quas suscipit, ad obcaecati cupiditate.
-          <br /><br />
-          Suscipit, ratione quasi recusandae nisi voluptas reiciendis ullam
-          veritatis quia autem rerum nostrum nulla alias necessitatibus.
-          <br /><br />
-          Omnis voluptatem molestiae unde odit ipsam, ea perferendis aliquid
-          debitis dolores eveniet repellat, dignissimos et harum mollitia.
+          Reliable Logistics You Can Trust PrestigeHaul is built on a
+          foundation of consistency, accuracy, and trust. We ensure every
+          delivery is handled with care.
+          <br />
+          <br />
+          whether it’s a small parcel or a large
+          shipment. Our system reduces delays, prevents errors, and keeps your
+          operations running smoothly.
+          <br />
         </p>
       </div>
 

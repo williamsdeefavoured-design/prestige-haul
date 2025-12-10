@@ -1,48 +1,111 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaTimes, FaBell } from "react-icons/fa";
+import { FaBars, FaTimes, FaBell, FaShoppingCart } from "react-icons/fa";
+import { useNotification } from "./context/NotificationContext";
 import MainBtn from "./MainBtn";
+import PrestigeLogo from "../assets/Prestige logo.png";
+import { useAuth } from "./context/AuthContext";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // ✅ Safe defaults
+  const { notifications = [], markAllRead } = useNotification();
+  const { user, logout } = useAuth();
+
+  const unreadCount = notifications.filter((n) => !n.read).length;
 
   return (
     <nav className="w-full bg-white shadow-sm sticky top-0 left-0 z-50">
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
-        {/* Logo */}
         <Link to="/">
-          <h1 className="text-3xl font-bold">
-            Prestige<span className="text-blue-700">Haul</span>
+          <h1 className="font-bold">
+            <img src={PrestigeLogo} className="w-70" alt="Prestige Logo" />
           </h1>
         </Link>
 
-        {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-10">
-          <Link to="/rides" className="hover:text-blue-700">
-            Our Rides
-          </Link>
-          <Link to="/order" className="hover:text-blue-700">
-            Book Us
-          </Link>
-          <Link to="/about" className="hover:text-blue-700">
-            About
+          <Link to="/rides" className="hover:text-blue-700">Our Rides</Link>
+          <Link to="/order" className="hover:text-blue-700">Book Us</Link>
+          <Link to="/about" className="hover:text-blue-700">About</Link>
+
+          {/* 🔔 Notification Bell */}
+          <div className="relative">
+            <FaBell
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="cursor-pointer text-xl"
+            />
+            {unreadCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                {unreadCount}
+              </span>
+            )}
+
+            {dropdownOpen && (
+              <div className="absolute top-10 right-0 mt-2 w-64 bg-white shadow-lg rounded-lg p-4 z-50">
+                <div className="flex justify-between items-center mb-2">
+                  <h4 className="font-semibold">Notifications</h4>
+                  <button
+                    onClick={() => {
+                      markAllRead?.(); // safe call
+                      setDropdownOpen(false);
+                    }}
+                    className="text-sm text-blue-600 hover:underline"
+                  >
+                    Mark all read
+                  </button>
+                </div>
+
+                {notifications.length === 0 ? (
+                  <p className="text-gray-500 text-sm">No notifications</p>
+                ) : (
+                  <ul className="space-y-2 max-h-64 overflow-y-auto">
+                    {notifications.map((n, i) => (
+                      <li
+                        key={n.id || i}
+                        className={`p-2 rounded text-sm ${
+                          n.read ? "bg-gray-100" : "bg-blue-100 font-medium"
+                        }`}
+                      >
+                        {n.message}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* 🛒 Cart Icon */}
+          <Link to="/cart">
+            <FaShoppingCart className="text-xl cursor-pointer hover:text-blue-700 transition" />
           </Link>
 
-          <div className="flex gap-5">
-            <Link to="/signup">
-              <button className="hover:bg-blue-700 hover:text-white bg-gray-400 px-4 py-2 rounded-xl transition-all duration-300">
-                Register for free
-              </button>
-            </Link>
-            <Link to="/signin">
-              <MainBtn text="Sign In" />
-            </Link>
-          </div>
+          {user ? (
+            <button
+              onClick={logout}
+              className="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700 transition"
+            >
+              Logout
+            </button>
+          ) : (
+            <div className="flex gap-5">
+              <Link to="/signup">
+                <button className="hover:bg-blue-700 hover:text-white bg-gray-400 px-4 py-2 rounded-xl transition">
+                  Register for free
+                </button>
+              </Link>
+              <Link to="/signin">
+                <MainBtn text="Sign In" />
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-3xl text-gray-700 focus:outline-none"
+          className="md:hidden text-3xl text-gray-700"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? <FaTimes /> : <FaBars />}
@@ -52,42 +115,32 @@ function Navbar() {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-white shadow-md px-6 py-4 space-y-3 text-center">
-          <Link
-            to="/rides"
-            className="block hover:text-blue-700"
-            onClick={() => setMenuOpen(false)}
-          >
-            Our Rides
-          </Link>
-          <Link
-            to="/order"
-            className="block hover:text-blue-700"
-            onClick={() => setMenuOpen(false)}
-          >
-            Book Us
-          </Link>
-          <Link
-            to="/about"
-            className="block hover:text-blue-700"
-            onClick={() => setMenuOpen(false)}
-          >
-            About
-          </Link>
-          <div className="flex flex-col gap-3 mt-3">
-            <Link to="/signup" onClick={() => setMenuOpen(false)}>
-              <button className="w-full hover:bg-blue-700 hover:text-white bg-gray-400 px-4 py-2 rounded-xl transition-all duration-300">
-                Register for free
-              </button>
-            </Link>
-            <Link to="/signin" onClick={() => setMenuOpen(false)}>
-              <MainBtn text="Sign In" />
-            </Link>
-            
-          </div>
+          <Link to="/rides" onClick={() => setMenuOpen(false)} className="block hover:text-blue-700">Our Rides</Link>
+          <Link to="/order" onClick={() => setMenuOpen(false)} className="block hover:text-blue-700">Book Us</Link>
+          <Link to="/about" onClick={() => setMenuOpen(false)} className="block hover:text-blue-700">About</Link>
 
-          <div className="notifi flex justify-center mt-2">
-              <FaBell className="text-black text-2xl" />
+          {user ? (
+            <button
+              onClick={() => {
+                logout();
+                setMenuOpen(false);
+              }}
+              className="w-full bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700 transition"
+            >
+              Logout
+            </button>
+          ) : (
+            <div className="flex flex-col gap-3 mt-3">
+              <Link to="/signup" onClick={() => setMenuOpen(false)}>
+                <button className="w-full hover:bg-blue-700 hover:text-white bg-gray-400 px-4 py-2 rounded-xl">
+                  Register for free
+                </button>
+              </Link>
+              <Link to="/signin" onClick={() => setMenuOpen(false)}>
+                <MainBtn text="Sign In" />
+              </Link>
             </div>
+          )}
         </div>
       )}
     </nav>

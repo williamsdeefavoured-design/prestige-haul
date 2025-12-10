@@ -14,9 +14,43 @@ import Haulage from "../components/Haulage";
 import "../index.css";
 import { Link } from "react-router-dom";
 import RiderCards from "../components/RiderCards";
+
+// 🔥 Import ALL rider images
 import rider1 from "../assets/rider.png";
+import rider2 from "../assets/rider-2.png";
+import rider3 from "../assets/rider-3.png";
+import rider4 from "../assets/rider-4.png";
+import rider5 from "../assets/rider-5.png";
+import rider6 from "../assets/rider-6.png";
+import rider7 from "../assets/rider-7.png";
+import rider8 from "../assets/rider-8.png";
+import rider9 from "../assets/rider-9.png";
+import rider10 from "../assets/rider-10.png";
+import rider11 from "../assets/rider-11.png";
+import rider12 from "../assets/rider-12.png";
+import rider13 from "../assets/rider-13.png";
+import rider14 from "../assets/rider-14.png";
 
 function Rides() {
+  // Put them in an array for easy indexing:
+  const riderImages = [
+    rider1,
+    rider2,
+    rider3,
+    rider4,
+    rider5,
+    rider6,
+    rider7,
+    rider8,
+    rider9,
+    rider10,
+    rider11,
+    rider12,
+    rider13,
+    rider14,
+  ];
+
+  // CAROUSEL DATA
   const cars = [
     {
       image: cargoTruck,
@@ -73,114 +107,33 @@ function Rides() {
     },
   ];
 
-  const riders = [
-    {
-      RiderImg: rider1,
-      RiderName: "Adebayo Samuel",
-      RiderId: "RH-1001",
-      RiderLocation: "Warri",
-      rating: 4.5,
-    },
-    {
-      RiderImg: rider1,
-      RiderName: "Oladimeji Tunde",
-      RiderId: "RH-1002",
-      RiderLocation: "Warri",
-      rating: 4.5,
-    },
-    {
-      RiderImg: rider1,
-      RiderName: "Ibrahim Musa",
-      RiderId: "RH-1003",
-      RiderLocation: "Warri",
-      rating: 4.5,
-    },
-    {
-      RiderImg: rider1,
-      RiderName: "Chukwuma Collins",
-      RiderId: "RH-1004",
-      RiderLocation: "Warri",
-      rating: 4.5,
-    },
-    {
-      RiderImg: rider1,
-      RiderName: "Okeke Emmanuel",
-      RiderId: "RH-1005",
-      RiderLocation: "Warri",
-      rating: 4.5,
-    },
-    {
-      RiderImg: rider1,
-      RiderName: "Adewale Sunday",
-      RiderId: "RH-1006",
-      RiderLocation: "Warri",
-      rating: 4.5,
-    },
-    {
-      RiderImg: rider1,
-      RiderName: "Balogun Kareem",
-      RiderId: "RH-1007",
-      RiderLocation: "Warri",
-      rating: 4.5,
-    },
-    {
-      RiderImg: rider1,
-      RiderName: "Eze Michael",
-      RiderId: "RH-1008",
-      RiderLocation: "Warri",
-      rating: 4.5,
-    },
-    {
-      RiderImg: rider1,
-      RiderName: "Yusuf Ahmad",
-      RiderId: "RH-1009",
-      RiderLocation: "Warri",
-      rating: 4.5,
-    },
-    {
-      RiderImg: rider1,
-      RiderName: "Alade Joseph",
-      RiderId: "RH-1010",
-      RiderLocation: "Warri",
-      rating: 4.5,
-    },
-    {
-      RiderImg: rider1,
-      RiderName: "Ajayi Timilehin",
-      RiderId: "RH-1011",
-      RiderLocation: "Warri",
-      rating: 4.5,
-    },
-    {
-      RiderImg: rider1,
-      RiderName: "Okon Patrick",
-      RiderId: "RH-1012",
-      RiderLocation: "Warri",
-      rating: 4.5,
-    },
-    {
-      RiderImg: rider1,
-      RiderName: "Uchenna Victor",
-      RiderId: "RH-1013",
-      RiderLocation: "Warri",
-      rating: 4.5,
-    },
-    {
-      RiderImg: rider1,
-      RiderName: "Bello Sulaiman",
-      RiderId: "RH-1014",
-      RiderLocation: "Warri",
-      rating: 4.5,
-    },
-    {
-      RiderImg: rider1,
-      RiderName: "Afolabi Peter",
-      RiderId: "RH-1015",
-      RiderLocation: "Warri",
-      rating: 4.5,
-    },
+  // RIDERS DATA (Images filled automatically)
+  const ridersBase = [
+    { RiderName: "Adebayo Samuel", RiderId: "RH-1001" },
+    { RiderName: "Oladimeji Tunde", RiderId: "RH-1002" },
+    { RiderName: "Ibrahim Musa", RiderId: "RH-1003" },
+    { RiderName: "Chukwuma Collins", RiderId: "RH-1004" },
+    { RiderName: "Okeke Emmanuel", RiderId: "RH-1005" },
+    { RiderName: "Adewale Sunday", RiderId: "RH-1006" },
+    { RiderName: "Balogun Kareem", RiderId: "RH-1007" },
+    { RiderName: "Eze Michael", RiderId: "RH-1008" },
+    { RiderName: "Yusuf Ahmad", RiderId: "RH-1009" },
+    { RiderName: "Alade Joseph", RiderId: "RH-1010" },
+    { RiderName: "Ajayi Timilehin", RiderId: "RH-1011" },
+    { RiderName: "Okon Patrick", RiderId: "RH-1012" },
+    { RiderName: "Uchenna Victor", RiderId: "RH-1013" },
+    { RiderName: "Bello Sulaiman", RiderId: "RH-1014" },
   ];
 
+  // Automatically attach images
+  const riders = ridersBase.map((r, i) => ({
+    ...r,
+    RiderImg: riderImages[i],
+    RiderLocation: "Warri",
+    rating: 4.5,
+  }));
+
+  // CAROUSEL LOGIC
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -192,25 +145,24 @@ function Rides() {
 
   return (
     <div className="tot-container">
-      <div className="flex flex-col md:flex-row items-center justify-between px-10 py-20 gap-10">
-        {/* LEFT TEXT */}
-        <div className="md:w-1/2 text-center md:text-left transition-all duration-700">
+      {/* CAROUSEL SECTION */}
+      <div className="flex flex-col md:flex-row items-center justify-center gap-10 px-10 py-20">
+        <div className="text-center md:text-left transition-all duration-700 max-w-md">
           <h1
             key={cars[index].title}
-            className="text-3xl md:text-4xl font-bold text-gray-800 fade"
+            className="text-3xl md:text-4xl font-bold text-gray-800 fade wrap-break-word"
           >
             {cars[index].title}
           </h1>
 
           <p
             key={cars[index].description}
-            className="mt-4 text-gray-600 text-lg fade"
+            className="mt-4 text-gray-600 text-lg fade whitespace-normal leading-relaxed"
           >
             {cars[index].description}
           </p>
         </div>
 
-        {/* RIGHT IMAGE */}
         <div className="md:w-1/2 flex flex-col items-center">
           <img
             key={cars[index].image}
@@ -218,20 +170,15 @@ function Rides() {
             className="w-full object-contain fade"
           />
 
-          {/* PAGINATION DOTS */}
+          {/* DOTS */}
           <div className="flex mt-4">
             {cars.map((_, idx) => (
               <span
                 key={idx}
                 onClick={() => setIndex(idx)}
+                className="h-3 w-3 mx-1 rounded-full cursor-pointer"
                 style={{
-                  height: "10px",
-                  width: "10px",
-                  margin: "0 5px",
-                  borderRadius: "50%",
-                  display: "inline-block",
                   backgroundColor: index === idx ? "black" : "gray",
-                  cursor: "pointer",
                 }}
               ></span>
             ))}
@@ -239,36 +186,36 @@ function Rides() {
         </div>
       </div>
 
+      {/* RIDE WITH US SECTION */}
       <div className="ride-us flex justify-evenly items-center my-20 py-10 bg-gray-100">
         <div className="left hidden md:block">
-          <img className="w-30 md:w-fit opacity-25" src={cargoTruckSide} />
+          <img className="opacity-25" src={cargoTruckSide} />
         </div>
 
         <Link to="/order">
-          <button className="bg-blue-700 text-white px-5 py-3 hover:scale-105 md:text-2xl lg:text-3xl rounded-2xl transition-all delay-100 translate-1.5">
+          <button className="bg-blue-700 text-white px-5 py-3 md:text-2xl lg:text-3xl rounded-2xl hover:scale-105 transition-all">
             Ride With Us Now
           </button>
         </Link>
 
         <div className="right hidden md:block">
           <img
-            className=" w-30 md:w-fit opacity-25 transform -scale-x-100"
+            className="opacity-25 transform -scale-x-100"
             src={cargoTruckSide}
           />
         </div>
       </div>
 
-      <div className="convoy">
-        <ConvoyRides />
-      </div>
+      {/* OTHER SECTIONS */}
+      <ConvoyRides />
+      <Cargo />
+      <Haulage />
 
-      <div className="Haulage">
-        <Cargo />
-      </div>
+      {/* RIDERS GRID */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 text-center gap-10 px-10 py-10">
-        {riders.map((rider, index) => (
+        {riders.map((rider, i) => (
           <RiderCards
-            key={index}
+            key={i}
             RiderImg={rider.RiderImg}
             RiderName={rider.RiderName}
             RiderId={rider.RiderId}
