@@ -2,7 +2,7 @@ import React from 'react'
 import Hero from '../components/Hero'
 import Haulage from '../components/Haulage'
 import Convoy from '../components/Convoy'
-import StatsSection from '../components/History'
+import StatsSection from '../components/StatSection'
 import WhyUs from '../components/WhyUs'
 
 function Home() {
