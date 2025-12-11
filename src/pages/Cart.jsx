@@ -60,7 +60,12 @@ export default function Cart() {
   };
 
   const handleSuccess = () => {
+    // Save ride to history
     saveRideToHistory(cart, formData, totalPrice);
+
+    // Remove the first order from the cart
+    removeOrder(0); // assumes you want to remove the first order after payment
+
     toast.success("Payment successful!", { autoClose: 2000 });
     navigate("/history");
   };

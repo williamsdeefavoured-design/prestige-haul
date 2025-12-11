@@ -9,40 +9,40 @@ function SignUp() {
   const { showNotification } = useNotification();
   const navigate = useNavigate();
 
-  const handleChange = (e) => setFormData({...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
+    const { firstName, lastName, email, password } = formData;
+    if (!firstName || !lastName || !email || !password) {
       showNotification("All fields are required", "error");
       return;
     }
-
-    if (!formData.email.includes("@")) {
+    if (!email.includes("@")) {
       showNotification("Enter a valid email address", "error");
       return;
     }
 
     setIsLoading(true);
-
     try {
-      const response = await fetch("https://haulageapp.onrender.com/api/v1/auth/signup", {
+      const res = await fetch("https://haulageapp.onrender.com/api/v1/auth/signup", {
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      const data = await res.json();
 
-      if (!response.ok) {
-        showNotification(data?.message || "Something went wrong", "error");
+      if (!res.ok) {
+        showNotification(data.message || "Something went wrong", "error");
         return;
       }
 
       showNotification("Account created successfully!", "success");
-      setTimeout(() => navigate("/signin"), 1500);
-    } catch {
+      setTimeout(() => navigate("/signin"), 1000);
+    } catch (err) {
+      console.error(err);
       showNotification("Network error — try again later.", "error");
     } finally {
       setIsLoading(false);
@@ -70,7 +70,10 @@ function SignUp() {
         </form>
 
         <p className="text-center text-gray-500 mt-6">
-          Already have an account? <Link to="/signin" className="text-blue-700 font-medium hover:underline">Sign In</Link>
+          Already have an account?{" "}
+          <Link to="/signin" className="text-blue-700 font-medium hover:underline">
+            Sign In
+          </Link>
         </p>
       </div>
     </div>

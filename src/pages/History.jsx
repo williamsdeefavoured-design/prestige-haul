@@ -12,6 +12,15 @@ export default function History() {
     setRides(savedRides);
   }, []);
 
+  // Delete a ride
+  const deleteRide = (rideId) => {
+    const updatedRides = rides.filter((ride) => ride.riderId !== rideId);
+    setRides(updatedRides);
+    localStorage.setItem("ridesHistory", JSON.stringify(updatedRides));
+    // Close popup if the deleted ride is selected
+    if (selectedRide && selectedRide.riderId === rideId) setSelectedRide(null);
+  };
+
   // Download selected ride as PDF
   const downloadPDF = (ride) => {
     const doc = new jsPDF();
@@ -39,7 +48,7 @@ export default function History() {
         {rides.map((ride, i) => (
           <div
             key={i}
-            className="bg-white p-4 rounded-xl shadow-md cursor-pointer hover:shadow-lg transition"
+            className="bg-white p-4 rounded-xl shadow-md cursor-pointer hover:shadow-lg transition relative"
             onClick={() => setSelectedRide(ride)}
           >
             <h2 className="font-semibold text-lg">{ride.riderName}</h2>
@@ -47,6 +56,17 @@ export default function History() {
             <p className="text-sm text-gray-500">{ride.vehicle}</p>
             <p className="text-sm text-gray-500">{ride.date}</p>
             <p className="font-bold text-gray-700">{ride.price}</p>
+
+            {/* DELETE BUTTON */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation(); // prevent opening the popup
+                deleteRide(ride.riderId);
+              }}
+              className="absolute top-2 right-2 text-red-500 font-bold hover:text-red-700"
+            >
+              &times;
+            </button>
           </div>
         ))}
       </div>

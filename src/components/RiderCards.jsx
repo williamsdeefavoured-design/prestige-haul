@@ -1,6 +1,9 @@
 import React from "react";
 
 function RiderCards({ RiderImg, RiderName, RiderId, RiderLocation, rating }) {
+  const fullStars = Math.floor(rating);
+  const halfStar = rating - fullStars >= 0.5;
+
   return (
     <div
       className="
@@ -31,16 +34,11 @@ function RiderCards({ RiderImg, RiderName, RiderId, RiderLocation, rating }) {
 
       {/* RATING */}
       <div className="flex items-center gap-1">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <span
-            key={i}
-            className={`text-xl ${
-              i < Math.floor(rating) ? "text-yellow-500" : "text-gray-300"
-            }`}
-          >
-            ★
-          </span>
-        ))}
+        {Array.from({ length: 5 }).map((_, i) => {
+          if (i < fullStars) return <span key={i} className="text-xl text-yellow-500">★</span>;
+          if (i === fullStars && halfStar) return <span key={i} className="text-xl text-yellow-500">⯪</span>; // half star
+          return <span key={i} className="text-xl text-gray-300">★</span>;
+        })}
         <span className="text-sm text-gray-600 ml-1">{rating}</span>
       </div>
     </div>
