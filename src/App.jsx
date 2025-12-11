@@ -10,6 +10,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import NotFound from "./components/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Services from "./pages/Services";
+import Contact from "./pages/Contact";
 import Cart from "./pages/Cart";
 import History from "./pages/History";
 import { NotificationProvider } from "./components/context/NotificationContext";
@@ -42,6 +44,8 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/rides" element={<Rides />} />
             <Route path="/history" element={<History />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/contact" element={<Contact />} />
 
             <Route
               path="/order"
